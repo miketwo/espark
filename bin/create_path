@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+'''
+Accepts two files:
+  - domain order
+  - student test scores
+
+Prints to the screen a path for each student.  Optional output to file.
+
+The script handles all command-line related input, such as arguments and
+file parsing. The rest is handled by libraries.
+'''
+
+import argparse
+import os
+
+from espark import main as espark
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'domain_order',
+        help=("Domain order file as csv. "
+              "Eg: /tmp/domain_order.csv"))
+    parser.add_argument(
+        'student_tests',
+        help="Student standardized test results as csv. Eg: '../student_tests.csv'")
+    parser.add_argument(
+        '-o',
+        '--output',
+        nargs=1,
+        help="Output to file")
+
+    args = parser.parse_args()
+    return args
+
+
+def main():
+    args = parse_args()
+    # ToDO Hnadle missing files
+    espark.create_paths(
+        os.path.realpath(args.student_tests),
+        os.path.realpath(args.domain_order))
+
+if __name__ == '__main__':
+    main()
