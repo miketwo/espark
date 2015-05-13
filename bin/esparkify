@@ -1,0 +1,82 @@
+#!/usr/bin/env python
+'''
+A program to create study paths for students.
+
+Accepts two csv files:
+  - domain order
+  - student test scores
+
+Prints to the screen a path for each student.
+
+The script handles all command-line related input, such as arguments and
+file parsing. The rest is handled by libraries.
+'''
+
+import argparse
+import os
+
+from espark import Student
+from espark import Level
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'domain_order',
+        help=("Domain order file as csv. "
+              "Eg: /tmp/domain_order.csv"))
+    parser.add_argument(
+        'student_tests',
+        help=("Student standardized test results as csv. "
+              "Eg: '../student_tests.csv'"))
+
+    args = parser.parse_args()
+    return args
+
+
+def create_students_from_csv(csv_file):
+    ''' Convert a csv file into a list of Student objects '''
+    res = []
+    with open(csv_file, 'r') as f:
+        firstline = f.readline().strip()
+        domains = firstline.split(',')[1:]
+        for line in f:
+            linelist = line.strip().split(',')
+            name = linelist[0]
+            grades = linelist[1:]
+            levels = [Level(*t) for t in zip(grades, domains)]
+            s = Student(name, levels)
+            res.append(s)
+    return res
+
+
+def create_levels_from_csv(csv_file):
+    ''' Convert a csv file into a list of Level objects'''
+    levels = []
+    with open(csv_file, 'r') as f:
+        for line in f:
+            linelist = line.strip().split(',')
+            grade = linelist[0]
+            for domain in linelist[1:]:
+                levels.append(Level(grade, domain))
+    return levels
+
+
+def main():
+    args = parse_args()
+    # ToDo(M2): Handle missing files
+    student_file = os.path.realpath(args.student_tests)
+    domain_file = os.path.realpath(args.domain_order)
+
+    # Create objects from files
+    students = create_students_from_csv(student_file)
+    levels = create_levels_from_csv(domain_file)
+
+    # Loop over students and print paths
+    for student in students:
+        path = student.path(levels)
+        pathstr = ",".join(str(p) for p in path)
+        print "{},{}".format(student.name, pathstr)
+
+if __name__ == '__main__':
+    main()

@@ -1,26 +1,103 @@
+eSparkify
+=========
+A program to create study paths for students.
+
+Installation
+------------
+To install (tested on Ubuntu 12.04, requires pip):
+```
+// Create a virtual environment (optional but recommended -- keeps your comp clean)
+virtualenv .venv
+. .venv/bin/activate
+// Clone and install
+git clone https://github.com/miketwo/espark
+cd espark
+pip install .
+```
+
+Development & Test
+------------------
+To develop and run tests (tested on Ubuntu 12.04):
+```
+// Create a virtual environment (optional but recommended -- keeps your comp clean)
+virtualenv .venv
+. .venv/bin/activate
+// Clone
+git clone https://github.com/miketwo/espark
+cd espark
+// Run tests
+./run_tests.sh
+// Install in dev mode
+pip install -e .
+```
+
+Usage
+-----
+```
+esparkify data/domain_order.csv data/student_tests.csv
+```
+
+
+ToDo
+----
+- If a student has no scores, then start at the beginning (with K.RF, in the example data)
+- For a given domain, students shouldn't have to repeat content that they have already
+mastered. For example, if a student has tested 2.RL, then they should not do K.RL or 1.RL.
+- Learning path should contain up to five units (if no content is left, then fewer units are ok)
+- This should be able to work with a different set of input, including a different set of domains that may or may not be Common Core.
+- handle missing files
+- PEP8 linting
+- more unit tests
+
+Layout
+------
+from http://stackoverflow.com/questions/193161/what-is-the-best-project-structure-for-a-python-application
+```
+Project/
+|-- bin/
+|   |-- script
+|
+|-- project/
+|   |-- test/
+|   |   |-- __init__.py
+|   |   |-- test_library1.py
+|   |   |-- test_library2.py
+|   |
+|   |-- __init__.py
+|   |-- library1.py
+|   |-- library2.py
+|
+|-- setup.py
+|-- README.md
+```
+
+
+Original Specification
+======================
+
 == Setup ==
 
 Our mission is to provide the best learning experiences to students, personalized
 to their unique learning pathway. One aspect of that personalization is academic level:
-students should work on content that is challenging, but not out of reach. 
+students should work on content that is challenging, but not out of reach.
 
 When a student first enters our system, we use their existing standardized test scores
 as a way to bootstrap the correct level. If a student comes in below grade level, they
-can work on something simpler than their classmates, whereas if they are way above 
+can work on something simpler than their classmates, whereas if they are way above
 grade level, then they can work on more challenging material.
 
 In this exercise, you'll take students' standardized test scores, and use some heuristics
 to produce a draft learning pathway for the student.
 
 The sample files provided work with just the reading standards, although this same approach
-would be used for math, social studies, or alternate standard systems. If you're curious, 
+would be used for math, social studies, or alternate standard systems. If you're curious,
 you can read more details about the reading standards here: http://www.corestandards.org/ELA-Literacy/
 
 == Input Files ==
 
 There are two input files:
 
-1/ domain_order.csv -- The Common Core State Standards are grouped broadly into domains - 
+1/ domain_order.csv -- The Common Core State Standards are grouped broadly into domains -
 for example, Reading Literature (RL) is the study of fictional text, whereas
 Reading Informational Text (RI) is non-fiction. This file contains the recommended order
 in which a student should work through the domains.

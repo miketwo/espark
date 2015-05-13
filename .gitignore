@@ -1,1 +1,3 @@
 *.pyc
+.venv
+espark.egg-info
