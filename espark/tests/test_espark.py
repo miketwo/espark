@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 import unittest
 
-from espark import Level, levels_from_string
-from espark import Student
+try:
+    from espark import Level, levels_from_string
+    from espark import Student
+except ImportError:
+    print ("Couldn't import espark. Did you follow the README developer "
+           "instructions?")
+    exit(-1)
 
 
 class StudentTests(unittest.TestCase):
