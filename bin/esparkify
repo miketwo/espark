@@ -1,26 +1,30 @@
 #!/usr/bin/env python
-'''
-A program to create study paths for students.
-
-Accepts two csv files:
-  - domain order
-  - student test scores
-
-Prints to the screen a path for each student.
-
-The script handles all command-line related input, such as arguments and
-file parsing. The rest is handled by libraries.
-'''
-
 import argparse
 import os
 
 from espark import Student
 from espark import Level
 
+DESC = '''
+DESCRIPTION
+A program to create study paths for students. It accepts two csv files:
+  - domain order
+  - student test scores
+See the README.md for the format of these files.
+
+OUTPUT
+Prints to the screen a path for each student.
+
+NOTES
+The script handles all command-line related input, such as arguments and
+file parsing. The rest is handled by libraries.
+'''
+
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description=DESC,
+        formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument(
         'domain_order',
         help=("Domain order file as csv. "
@@ -69,6 +73,7 @@ def main():
     domain_file = os.path.realpath(args.domain_order)
 
     # Create objects from files
+    # ToDo(M2): If using a HUGE file, convert to using generator
     students = create_students_from_csv(student_file)
     levels = create_levels_from_csv(domain_file)
 

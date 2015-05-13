@@ -15,6 +15,13 @@ cd espark
 pip install .
 ```
 
+Usage
+-----
+Invoke with the domain order and student scores csv files, like so:
+```
+esparkify data/domain_order.csv data/student_tests.csv
+```
+
 Development & Test
 ------------------
 To develop and run tests (tested on Ubuntu 12.04):
@@ -31,27 +38,13 @@ cd espark
 pip install -e .
 ```
 
-Usage
------
-```
-esparkify data/domain_order.csv data/student_tests.csv
-```
-
-
 ToDo
 ----
-- If a student has no scores, then start at the beginning (with K.RF, in the example data)
-- For a given domain, students shouldn't have to repeat content that they have already
-mastered. For example, if a student has tested 2.RL, then they should not do K.RL or 1.RL.
-- Learning path should contain up to five units (if no content is left, then fewer units are ok)
-- This should be able to work with a different set of input, including a different set of domains that may or may not be Common Core.
-- handle missing files
-- PEP8 linting
-- more unit tests
+- handle missing csv files more gracefully
 
 Layout
 ------
-from http://stackoverflow.com/questions/193161/what-is-the-best-project-structure-for-a-python-application
+Uses a "standard" Python project layout
 ```
 Project/
 |-- bin/
